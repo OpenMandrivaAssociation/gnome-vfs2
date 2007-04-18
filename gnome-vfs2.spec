@@ -14,7 +14,7 @@
 
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
-Version: 2.18.0.1
+Version: 2.18.1
 Release: %mkrel 1
 License:	LGPL
 Group:		Graphical desktop/GNOME
@@ -179,5 +179,3 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_libdir}/%{pkgname}-*/include
 %{_libdir}/pkgconfig/*.pc
-
-
