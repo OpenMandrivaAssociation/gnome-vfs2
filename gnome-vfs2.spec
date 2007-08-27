@@ -4,7 +4,8 @@
 %define pkgname gnome-vfs
 %define api_version	2
 %define lib_major	0
-%define lib_name	%mklibname %{name}_ %{lib_major}
+%define libname	%mklibname %{name}_ %{lib_major}
+%define libnamedev %mklibname -d %{name}
 
 %if %mdkver >= 200610
 %define enable_hal 1
@@ -14,7 +15,7 @@
 
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
-Version: 2.19.3
+Version: 2.19.91
 Release: %mkrel 1
 License:	LGPL
 Group:		Graphical desktop/GNOME
@@ -50,7 +51,7 @@ BuildRequires:	intltool
 BuildRequires:  glib2-devel >= 2.9.3
 BuildRequires:  dbus-devel
 BuildRequires:	libxml2-devel
-Requires:	%{lib_name} = %{version}
+Requires:	%{libname} = %{version}
 Requires(post):	GConf2 >= %{req_gconf2_version}
 Requires(preun):	GConf2 >= %{req_gconf2_version}
 Requires:	dbus-x11
@@ -70,7 +71,7 @@ application.
 
 
 
-%package -n %{lib_name}
+%package -n %{libname}
 Summary:	%{summary}
 Group:		%{group}
 Provides:	lib%{name} = %{version}-%{release}
@@ -78,7 +79,7 @@ Requires:	gnome-mime-data >= 2.0.0
 Requires:   %{name} >= %{version}-%{release}
 Conflicts: %{name} < 2.10.1-9mdk
 
-%description -n %{lib_name}
+%description -n %{libname}
 The GNOME Virtual File System provides an abstraction to common file
 system operations like reading, writing and copying files, listing
 directories and so on.
@@ -87,16 +88,17 @@ This package contains the main GNOME VFS libraries, which is required
 by the basic GNOME 2 system.
 
 
-%package -n %{lib_name}-devel
+%package -n %{libnamedev}
 Summary:	Libraries and include files for gnome-vfs
 Group:		Development/GNOME and GTK+
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
-Requires:	%{lib_name} = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 Requires:	libbonobo2_x-devel
 Requires:   libGConf2-devel >= %{req_gconf2_version}
+Obsoletes: %mklibname -d %{name}_ %{lib_major}
 
-%description -n %{lib_name}-devel
+%description -n %{libnamedev}
 The GNOME Virtual File System provides an abstraction to common file
 system operations like reading, writing and copying files, listing
 directories and so on.
@@ -151,8 +153,8 @@ rm -rf %{buildroot}
 %preun
 %preun_uninstall_gconf_schemas %schemas
 
-%post -n %{lib_name} -p /sbin/ldconfig
-%postun -n %{lib_name} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %files -n %{name} -f %{pkgname}-2.0.lang
 %defattr(-, root, root)
@@ -162,14 +164,14 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %_datadir/dbus-1/services/*.service
 
-%files -n %{lib_name}
+%files -n %{libname}
 %defattr(-, root, root)
-%{_libdir}/lib*.so.*
+%{_libdir}/libgnomevfs-2.so.%{lib_major}*
 %dir %{_libdir}/%{pkgname}-*
 %dir %{_libdir}/%{pkgname}-*/modules
 %{_libdir}/%{pkgname}-2.0/modules/*.so
 
-%files -n %{lib_name}-devel
+%files -n %{libnamedev}
 %defattr(-, root, root)
 %doc ChangeLog
 %doc %{_datadir}/gtk-doc/html/*
