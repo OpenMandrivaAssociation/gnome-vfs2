@@ -16,7 +16,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version: 2.20.0
-Release: %mkrel 1
+Release: %mkrel 2
 License:	LGPL
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -31,6 +31,12 @@ Patch10:	gnome-vfs-2.8.1-console-mount-opt.patch
 Patch11:	gnome-vfs-2.17.91-fixh323.patch
 # (fc) 2.17.91-3mdv allow OnlyShowIn=KDE .desktop to be used when running under KDE (Mdv bug #26999)
 Patch12:	gnome-vfs-2.17.91-onlyshow.patch
+# (fc) 2.18.0.1-2mdv fix crash when fstab is being edited (Ubuntu) (GNOME bug #300547)
+Patch13:	gnome-vfs-2.20.0-fstab-edit-crash.patch
+# (fc) 2.18.0.1-2mdv fix uuid and label mount point duplication (initial idea from Ubuntu bug #57701) (Mdv bug #32792)
+Patch14:	gnome-vfs-2.20.0-uuid-label-mount.patch
+# (fc) 2.18.0.1-2mdv resolve mount point fstab symlinks (Ubuntu)
+Patch15:	gnome-vfs-2.20.0-resolve-fstab-symlinks.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	gawk
@@ -114,6 +120,9 @@ GNOME VFS applications.
 %patch10 -p1 -b .pamconsole
 %patch11 -p1 -b .fixh323
 %patch12 -p1 -b .onlyshow
+%patch13 -p1 -b .fstab-edit-crash
+%patch14 -p1 -b .uuid-label-mount
+%patch15 -p1 -b .resolve-fstab-symlinks
 
 %build
 
