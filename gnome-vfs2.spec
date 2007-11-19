@@ -16,7 +16,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version: 2.20.1
-Release: %mkrel 1
+Release: %mkrel 2
 License:	LGPL
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -37,6 +37,10 @@ Patch13:	gnome-vfs-2.20.0-fstab-edit-crash.patch
 Patch14:	gnome-vfs-2.20.0-uuid-label-mount.patch
 # (fc) 2.18.0.1-2mdv resolve mount point fstab symlinks (Ubuntu)
 Patch15:	gnome-vfs-2.20.0-resolve-fstab-symlinks.patch
+# (fc) 2.20.3-3mdv workaround SMB servers not liking return > 64KB (SUSE, GNOME bug #332281)
+Patch16:	gnome-vfs2-smb-bufsize.patch
+# (fc) 2.20.1-2mdv fix uri handling when using non-UTF8 locale (GNOME bug #498261)
+Patch17:	gnome-vfs-2.20.1-fix-nonutf8-uri.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	gawk
@@ -123,6 +127,8 @@ GNOME VFS applications.
 %patch13 -p1 -b .fstab-edit-crash
 %patch14 -p1 -b .uuid-label-mount
 %patch15 -p1 -b .resolve-fstab-symlinks
+%patch16 -p1 -b .smb-bufsize
+%patch17 -p1 -b .fix-nonutf8-uri
 
 %build
 
