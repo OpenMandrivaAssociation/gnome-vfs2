@@ -42,7 +42,6 @@ Patch16:	gnome-vfs2-smb-bufsize.patch
 # (fc) 2.20.1-2mdv fix uri handling when using non-UTF8 locale (GNOME bug #498261)
 Patch17:	gnome-vfs-2.20.1-fix-nonutf8-uri.patch
 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	gawk
 BuildRequires:  avahi-client-devel avahi-glib-devel
 BuildRequires:  libacl-devel
