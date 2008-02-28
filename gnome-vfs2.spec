@@ -16,7 +16,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version: 2.21.90
-Release: %mkrel 1
+Release: %mkrel 2
 License:	LGPL
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -50,7 +50,7 @@ BuildRequires:  dbus-glib-devel
 %endif
 BuildRequires:  perl-XML-Parser
 BuildRequires:  gnome-mime-data
-BuildRequires:	libcdda-devel bzip2-devel openssl-devel fam-devel
+BuildRequires:	bzip2-devel openssl-devel fam-devel
 BuildRequires:  libsmbclient-devel >= 3.0.20
 BuildRequires:	libGConf2-devel >= %{req_gconf2_version}
 BuildRequires:	libORBit2-devel >= %{req_orbit_version}
@@ -65,7 +65,8 @@ Requires(preun):	GConf2 >= %{req_gconf2_version}
 Requires:	dbus-x11
 Conflicts:	libgnome2 <= 2.4.0
 Requires:	shared-mime-info, libsmbclient
-Requires:	mandrake_desk >= 10.1-6mdk
+# needed for www-browser
+Requires:	desktop-common-data
 Obsoletes:	gnome-vfs-extras
 Provides:	gnome-vfs-extras
 
