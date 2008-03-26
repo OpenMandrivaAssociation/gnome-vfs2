@@ -16,7 +16,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version: 2.22.0
-Release: %mkrel 1
+Release: %mkrel 2
 License:	LGPL
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -82,7 +82,7 @@ application.
 
 %package -n %{libname}
 Summary:	%{summary}
-Group:		%{group}
+Group:		System/Libraries
 Provides:	lib%{name} = %{version}-%{release}
 Requires:	gnome-mime-data >= 2.0.0
 Requires:   %{name} >= %{version}-%{release}
