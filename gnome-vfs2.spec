@@ -16,7 +16,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version: 2.22.0
-Release: %mkrel 2
+Release: %mkrel 3
 License:	LGPL
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -39,6 +39,8 @@ Patch14:	gnome-vfs-2.20.0-uuid-label-mount.patch
 Patch15:	gnome-vfs-2.20.0-resolve-fstab-symlinks.patch
 # (fc) 2.20.3-3mdv workaround SMB servers not liking return > 64KB (SUSE, GNOME bug #332281)
 Patch16:	gnome-vfs2-smb-bufsize.patch
+# (fc) 2.22.0-3mdv fix underlinking
+Patch17:	gnome-vfs-2.22.0-underlinking.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	gawk
@@ -127,6 +129,10 @@ GNOME VFS applications.
 %patch14 -p1 -b .uuid-label-mount
 %patch15 -p1 -b .resolve-fstab-symlinks
 %patch16 -p1 -b .smb-bufsize
+%patch17 -p1 -b .underlinking
+
+#needed by patch17
+autoreconf
 
 %build
 
