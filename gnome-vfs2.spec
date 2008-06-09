@@ -172,8 +172,12 @@ rm -rf %{buildroot}
 %preun
 %preun_uninstall_gconf_schemas %schemas
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %files -n %{name} -f %{pkgname}-2.0.lang
 %defattr(-, root, root)
