@@ -15,8 +15,8 @@
 
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
-Version: 2.24.0
-Release: %mkrel 2
+Version: 2.24.1
+Release: %mkrel 1
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -26,7 +26,7 @@ Patch5:		gnome-vfs-2.8.2-webclient.patch
 # (fc) 2.8.2-1mdk handle about: url (Fedora)
 Patch8:		gnome-vfs-2.7.90-schema_about_for_upstream.patch
 # (fc) 2.8.3-5mdk support pamconsole mount option (Fedora)
-Patch10:	gnome-vfs-2.8.1-console-mount-opt.patch
+Patch10:	gnome-vfs-2.24.1-console-mount-opt.patch
 # (fc) 2.17.91-2mdv replace references to gnomemeeting with ekiga
 Patch11:	gnome-vfs-2.17.91-fixh323.patch
 # (fc) 2.17.91-3mdv allow OnlyShowIn=KDE .desktop to be used when running under KDE (Mdv bug #26999)
