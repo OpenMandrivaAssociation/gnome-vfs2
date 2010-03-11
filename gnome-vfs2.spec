@@ -16,7 +16,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version: 2.24.2
-Release: %mkrel 2
+Release: %mkrel 3
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -37,6 +37,14 @@ Patch13:	gnome-vfs-2.20.0-fstab-edit-crash.patch
 Patch14:	gnome-vfs-2.20.0-uuid-label-mount.patch
 # (fc) 2.18.0.1-2mdv resolve mount point fstab symlinks (Ubuntu)
 Patch15:	gnome-vfs-2.20.0-resolve-fstab-symlinks.patch
+# (fc) 2.24.2-3mdv add default media player schema (GNOME bug #435653) (Fedora)
+Patch16:	gnome-vfs-2.24.2-default-media-application-schema.patch
+# (fc) 2.24.2-3mdv ensure mailto evolution command is a mailer (RH bug #197868) (Fedora)
+Patch17:	gnome-vfs-2.15.91-mailto-command.patch
+# (fc) 2.24.2-3mdv fix dbus error (Fedora bug #486286) (Fedora)
+Patch18:	gnome-vfs-2.24.xx-utf8-mounts.patch
+# (fc) CVE-2009-2473 gnome-vfs2 embedded neon: billion laughs DoS attacck (Fedora)
+Patch19:	gnome-vfs-2.24.3-CVE-2009-2473.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 BuildRequires:	gawk
@@ -124,6 +132,10 @@ GNOME VFS applications.
 %patch13 -p1 -b .fstab-edit-crash
 %patch14 -p1 -b .uuid-label-mount
 %patch15 -p1 -b .resolve-fstab-symlinks
+%patch16 -p1 -b .default-media-player
+%patch17 -p1 -b .mailto-command
+%patch18 -p1 -b .utf8-mounts
+%patch19 -p1 -b .CVE-2009-2473
 
 %build
 
