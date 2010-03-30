@@ -15,8 +15,8 @@
 
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
-Version: 2.24.2
-Release: %mkrel 3
+Version: 2.24.3
+Release: %mkrel 1
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
