@@ -8,7 +8,7 @@
 %define libnamedev %mklibname -d %{name}
 
 %if %mdkver >= 200610
-%define enable_hal 1
+%define enable_hal 0
 %else
 %define enable_hal 0
 %endif
@@ -16,7 +16,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version: 2.24.4
-Release: %mkrel 1
+Release: %mkrel 2
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -52,8 +52,8 @@ BuildRequires:  avahi-client-devel avahi-glib-devel
 BuildRequires:  libacl-devel
 %if %enable_hal
 BuildRequires:  hal-devel >= 0.5
-BuildRequires:  dbus-glib-devel
 %endif
+BuildRequires:  dbus-glib-devel
 BuildRequires:  perl-XML-Parser
 BuildRequires:  gnome-mime-data
 BuildRequires:	bzip2-devel openssl-devel fam-devel
