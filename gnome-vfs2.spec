@@ -59,6 +59,7 @@ BuildRequires:  gnome-mime-data
 BuildRequires:	bzip2-devel openssl-devel fam-devel
 BuildRequires:  libsmbclient-devel >= 3.0.20
 BuildRequires:	libGConf2-devel >= %{req_gconf2_version}
+BuildRequires:	GConf2
 BuildRequires:	libORBit2-devel >= %{req_orbit_version}
 BuildRequires:  gtk-doc docbook-dtd412-xml
 BuildRequires:	intltool
