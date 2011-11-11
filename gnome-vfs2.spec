@@ -1,22 +1,16 @@
-%define req_gconf2_version	1.1.1
-%define req_orbit_version	2.9.0
+%define	req_gconf2_version	1.1.1
+%define	req_orbit_version	2.9.0
 
-%define pkgname gnome-vfs
-%define api_version	2
-%define lib_major	0
-%define libname	%mklibname %{name}_ %{lib_major}
-%define libnamedev %mklibname -d %{name}
-
-%if %mdkver >= 200610
-%define enable_hal 0
-%else
-%define enable_hal 0
-%endif
+%define	pkgname gnome-vfs
+%define	api_version	2
+%define	lib_major	0
+%define	libname	%mklibname %{name}_ %{lib_major}
+%define	libnamedev %mklibname -d %{name}
 
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
-Version: 2.24.4
-Release: %mkrel 3
+Version:	2.24.4
+Release:	4
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -46,36 +40,34 @@ Patch18:	gnome-vfs-2.24.xx-utf8-mounts.patch
 # (fc) CVE-2009-2473 gnome-vfs2 embedded neon: billion laughs DoS attacck (Fedora)
 Patch19:	gnome-vfs-2.24.3-CVE-2009-2473.patch
 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gawk
-BuildRequires:  avahi-client-devel avahi-glib-devel
-BuildRequires:  libacl-devel
-%if %enable_hal
-BuildRequires:  hal-devel >= 0.5
-%endif
-BuildRequires:  dbus-glib-devel
-BuildRequires:  perl-XML-Parser
-BuildRequires:  gnome-mime-data
-BuildRequires:	bzip2-devel openssl-devel fam-devel
-BuildRequires:  libsmbclient-devel >= 3.0.20
-BuildRequires:	libGConf2-devel >= %{req_gconf2_version}
-BuildRequires:	GConf2
-BuildRequires:	libORBit2-devel >= %{req_orbit_version}
-BuildRequires:  gtk-doc docbook-dtd412-xml
+BuildRequires:	gnome-mime-data
+BuildRequires:	gtk-doc
 BuildRequires:	intltool
-BuildRequires:  glib2-devel >= 2.9.3
-BuildRequires:  dbus-devel
-BuildRequires:	libxml2-devel
-Requires:	%{libname} = %{version}
+BuildRequires:	pkgconfig(avahi-client)
+BuildRequires:	pkgconfig(avahi-glib)
+BuildRequires:	pkgconfig(dbus-1)
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(gconf-2.0) >= %{req_gconf2_version}
+BuildRequires:	pkgconfig(glib-2.0) >= 2.9.3
+BuildRequires:	pkgconfig(libssl)
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(smbclient)
+BuildRequires:	perl-XML-Parser
+BuildRequires:	libacl-devel
+BuildRequires:	bzip2-devel
+BuildRequires:	fam-devel
+BuildRequires:	GConf2
+# no evidence of linkage
+#BuildRequires:	libORBit2-devel >= %{req_orbit_version}
+Requires:	%{libname} = %{version}-%{release}
 Requires(post):	GConf2 >= %{req_gconf2_version}
 Requires(preun):	GConf2 >= %{req_gconf2_version}
 Requires:	dbus-x11
-Conflicts:	libgnome2 <= 2.4.0
-Requires:	shared-mime-info, libsmbclient
+Requires:	shared-mime-info
 # needed for www-browser
 Requires:	desktop-common-data
-Obsoletes:	gnome-vfs-extras
-Provides:	gnome-vfs-extras
 
 %description
 The GNOME Virtual File System provides an abstraction to common file
@@ -85,15 +77,11 @@ Commander's VFS (as it uses a similar URI scheme) but it is designed
 from the ground up to be extensible and to be usable from any
 application.
 
-
-
 %package -n %{libname}
 Summary:	%{summary}
 Group:		System/Libraries
 Provides:	lib%{name} = %{version}-%{release}
 Requires:	gnome-mime-data >= 2.0.0
-Requires:   %{name} >= %{version}-%{release}
-Conflicts: %{name} < 2.10.1-9mdk
 
 %description -n %{libname}
 The GNOME Virtual File System provides an abstraction to common file
@@ -108,11 +96,7 @@ by the basic GNOME 2 system.
 Summary:	Libraries and include files for gnome-vfs
 Group:		Development/GNOME and GTK+
 Provides:	%{name}-devel = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
-Requires:	libbonobo2_x-devel
-Requires:   libGConf2-devel >= %{req_gconf2_version}
-Obsoletes: %mklibname -d %{name}_ %{lib_major}
 
 %description -n %{libnamedev}
 The GNOME Virtual File System provides an abstraction to common file
@@ -124,28 +108,15 @@ GNOME VFS applications.
 
 
 %prep
-%setup -q -n %{pkgname}-%{version}
-%patch5 -p1 -b .webclient
-%patch8 -p1 -b .about
-%patch10 -p1 -b .pamconsole
-%patch11 -p1 -b .fixh323
-%patch12 -p1 -b .onlyshow
-%patch13 -p1 -b .fstab-edit-crash
-%patch14 -p1 -b .uuid-label-mount
-%patch15 -p1 -b .resolve-fstab-symlinks
-%patch16 -p1 -b .default-media-player
-%patch17 -p1 -b .mailto-command
-%patch18 -p1 -b .utf8-mounts
-%patch19 -p1 -b .CVE-2009-2473
+%setup -qn %{pkgname}-%{version}
+%apply_patches
 
 %build
-
-%configure2_5x --enable-gtk-doc=yes --disable-selinux \
-%if %enable_hal
---enable-hal
-%else
---disable-hal
-%endif
+%configure2_5x \
+	--enable-gtk-doc=yes \
+	--disable-selinux \
+	--disable-hal \
+	--disable-static
 
 %make
 
@@ -154,60 +125,42 @@ rm -rf %{buildroot}
 %makeinstall_std
 
 # multiarch policy
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/gnome-vfs-2.0/libgnomevfs/gnome-vfs-file-size.h
-
+%multiarch_includes %{buildroot}%{_includedir}/gnome-vfs-2.0/libgnomevfs/gnome-vfs-file-size.h
 
 # we ship our own files in drakconf and drakwizard
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/gnome-vfs-2.0/vfolders/{system,server}-settings.vfolder-info
+rm -f %{buildroot}%{_sysconfdir}/gnome-vfs-2.0/vfolders/{system,server}-settings.vfolder-info
 
 # don't package these
-rm -f %buildroot%{_libdir}/%{pkgname}-*/modules/*a
+rm -f %{buildroot}%{_libdir}/%{pkgname}-*/modules/*a
+find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 
 %{find_lang} %{pkgname}-2.0
 
-%clean
-rm -rf %{buildroot}
-
-%define schemas desktop_default_applications desktop_gnome_url_handlers system_dns_sd system_http_proxy system_smb 
-
-%post 
-%post_install_gconf_schemas %schemas
+%define	schemas desktop_default_applications desktop_gnome_url_handlers system_dns_sd system_http_proxy system_smb 
 
 %preun
 %preun_uninstall_gconf_schemas %schemas
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files -n %{name} -f %{pkgname}-2.0.lang
-%defattr(-, root, root)
 %doc AUTHORS NEWS README
 %config(noreplace) %{_sysconfdir}/%{pkgname}-*
 %config(noreplace) %{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
-%_datadir/dbus-1/services/*.service
+%{_datadir}/dbus-1/services/*.service
 
 %files -n %{libname}
-%defattr(-, root, root)
 %{_libdir}/libgnomevfs-2.so.%{lib_major}*
-%dir %{_libdir}/%{pkgname}-*
-%dir %{_libdir}/%{pkgname}-*/modules
+%dir %{_libdir}/%{pkgname}-2.0
+%dir %{_libdir}/%{pkgname}-2.0/modules
 %{_libdir}/%{pkgname}-2.0/modules/*.so
 
 %files -n %{libnamedev}
-%defattr(-, root, root)
 %doc ChangeLog
 %doc %{_datadir}/gtk-doc/html/*
 %{_includedir}/*
 %dir %{multiarch_includedir}/gnome-vfs-2.0
 %dir %{multiarch_includedir}/gnome-vfs-2.0/libgnomevfs
 %{multiarch_includedir}/gnome-vfs-2.0/libgnomevfs/gnome-vfs-file-size.h
-%{_libdir}/*.a
-%attr(644,root,root) %{_libdir}/*.la
 %{_libdir}/*.so
 %{_libdir}/%{pkgname}-*/include
 %{_libdir}/pkgconfig/*.pc
