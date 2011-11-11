@@ -59,8 +59,6 @@ BuildRequires:	libacl-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	fam-devel
 BuildRequires:	GConf2
-# no evidence of linkage
-#BuildRequires:	libORBit2-devel >= %{req_orbit_version}
 Requires:	%{libname} = %{version}-%{release}
 Requires(post):	GConf2 >= %{req_gconf2_version}
 Requires(preun):	GConf2 >= %{req_gconf2_version}
@@ -111,6 +109,11 @@ GNOME VFS applications.
 %setup -qn %{pkgname}-%{version}
 %apply_patches
 
+# this is a hack for glib2.0 >= 2.31.0
+sed -i -e 's/-DG_DISABLE_DEPRECATED//g' \
+	./daemon/Makefile.* \
+	./libgnomevfs/Makefile.*
+
 %build
 %configure2_5x \
 	--enable-gtk-doc=yes \
@@ -147,6 +150,7 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %config(noreplace) %{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
 %{_datadir}/dbus-1/services/*.service
+%{_libexecdir}/gnome-vfs-daemon
 
 %files -n %{libname}
 %{_libdir}/libgnomevfs-2.so.%{lib_major}*
@@ -157,7 +161,7 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %files -n %{libnamedev}
 %doc ChangeLog
 %doc %{_datadir}/gtk-doc/html/*
-%{_includedir}/*
+%{_includedir}/gnome-vfs*2.0/*
 %dir %{multiarch_includedir}/gnome-vfs-2.0
 %dir %{multiarch_includedir}/gnome-vfs-2.0/libgnomevfs
 %{multiarch_includedir}/gnome-vfs-2.0/libgnomevfs/gnome-vfs-file-size.h
