@@ -1,11 +1,8 @@
-%define	req_gconf2_version	1.1.1
-%define	req_orbit_version	2.9.0
-
 %define	pkgname gnome-vfs
 %define	api_version	2
 %define	lib_major	0
 %define	libname	%mklibname %{name}_ %{lib_major}
-%define	libnamedev %mklibname -d %{name}
+%define	develname %mklibname -d %{name}
 
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
@@ -42,6 +39,7 @@ Patch19:	gnome-vfs-2.24.3-CVE-2009-2473.patch
 
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gawk
+BuildRequires:	GConf2
 BuildRequires:	gnome-mime-data
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
@@ -49,7 +47,7 @@ BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(dbus-glib-1)
-BuildRequires:	pkgconfig(gconf-2.0) >= %{req_gconf2_version}
+BuildRequires:	pkgconfig(gconf-2.0) >= 1.1.1
 BuildRequires:	pkgconfig(glib-2.0) >= 2.9.3
 BuildRequires:	pkgconfig(libssl)
 BuildRequires:	pkgconfig(libxml-2.0)
@@ -58,10 +56,8 @@ BuildRequires:	perl-XML-Parser
 BuildRequires:	libacl-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	fam-devel
-BuildRequires:	GConf2
 Requires:	%{libname} = %{version}-%{release}
-Requires(post):	GConf2 >= %{req_gconf2_version}
-Requires(preun):	GConf2 >= %{req_gconf2_version}
+Requires(post,preun):	GConf2 >= 1.1.1
 Requires:	dbus-x11
 Requires:	shared-mime-info
 # needed for www-browser
@@ -90,13 +86,13 @@ This package contains the main GNOME VFS libraries, which is required
 by the basic GNOME 2 system.
 
 
-%package -n %{libnamedev}
+%package -n %{develname}
 Summary:	Libraries and include files for gnome-vfs
 Group:		Development/GNOME and GTK+
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 
-%description -n %{libnamedev}
+%description -n %{develname}
 The GNOME Virtual File System provides an abstraction to common file
 system operations like reading, writing and copying files, listing
 directories and so on.
@@ -158,7 +154,7 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %dir %{_libdir}/%{pkgname}-2.0/modules
 %{_libdir}/%{pkgname}-2.0/modules/*.so
 
-%files -n %{libnamedev}
+%files -n %{develname}
 %doc ChangeLog
 %doc %{_datadir}/gtk-doc/html/*
 %{_includedir}/gnome-vfs*2.0/*
