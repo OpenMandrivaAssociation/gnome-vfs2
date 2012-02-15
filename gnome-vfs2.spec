@@ -7,7 +7,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version:	2.24.4
-Release:	4
+Release:	5
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -62,6 +62,8 @@ Requires:	dbus-x11
 Requires:	shared-mime-info
 # needed for www-browser
 Requires:	desktop-common-data
+Requires:	gnome-mime-data >= 2.0.0
+Conflicts:	%{_lib}gnome-vfs2_0 < 2.24.4-5
 
 %description
 The GNOME Virtual File System provides an abstraction to common file
@@ -74,8 +76,6 @@ application.
 %package -n %{libname}
 Summary:	%{summary}
 Group:		System/Libraries
-Provides:	lib%{name} = %{version}-%{release}
-Requires:	gnome-mime-data >= 2.0.0
 
 %description -n %{libname}
 The GNOME Virtual File System provides an abstraction to common file
@@ -84,7 +84,6 @@ directories and so on.
 
 This package contains the main GNOME VFS libraries, which is required
 by the basic GNOME 2 system.
-
 
 %package -n %{develname}
 Summary:	Libraries and include files for gnome-vfs
@@ -99,7 +98,6 @@ directories and so on.
 
 This package includes libraries and header files for developing
 GNOME VFS applications.
-
 
 %prep
 %setup -qn %{pkgname}-%{version}
@@ -146,13 +144,13 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %config(noreplace) %{_sysconfdir}/gconf/schemas/*
 %{_bindir}/*
 %{_datadir}/dbus-1/services/*.service
+%dir %{_libdir}/%{pkgname}-2.0
+%dir %{_libdir}/%{pkgname}-2.0/modules
+%{_libdir}/%{pkgname}-2.0/modules/*.so
 %{_libexecdir}/gnome-vfs-daemon
 
 %files -n %{libname}
 %{_libdir}/libgnomevfs-2.so.%{lib_major}*
-%dir %{_libdir}/%{pkgname}-2.0
-%dir %{_libdir}/%{pkgname}-2.0/modules
-%{_libdir}/%{pkgname}-2.0/modules/*.so
 
 %files -n %{develname}
 %doc ChangeLog
