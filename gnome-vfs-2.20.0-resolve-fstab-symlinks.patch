@@ -1,0 +1,23 @@
+--- gnome-vfs-2.18.0.1/libgnomevfs/gnome-vfs-unix-mounts.c.resolve-fstab-symlinks	2007-10-01 19:31:40.000000000 +0200
++++ gnome-vfs-2.18.0.1/libgnomevfs/gnome-vfs-unix-mounts.c	2007-10-01 19:33:59.000000000 +0200
+@@ -677,6 +677,7 @@ _gnome_vfs_get_unix_mount_table (GList *
+ 	char *stat_file;
+ 	struct stat sb;
+ 	GnomeVFSUnixMountPoint *mount_entry;
++        char rpath[PATH_MAX];
+ 	
+ 	stat_file = read_file = get_fstab_file ();
+ 
+@@ -708,7 +709,11 @@ _gnome_vfs_get_unix_mount_table (GList *
+ 		
+ 		mount_entry = g_new0 (GnomeVFSUnixMountPoint, 1);
+ 
+-		mount_entry->mount_path = g_strdup (mntent.mnt_mountp);
++                /* resolve symlinks */
++                if (realpath (mntent->mnt_dir, rpath))
++                    mount_entry->mount_path = g_strdup (rpath);
++                else
++                    mount_entry->mount_path = g_strdup (mntent->mnt_dir);
+ 		mount_entry->device_path = g_strdup (mntent.mnt_special);
+ 		mount_entry->filesystem_type = g_strdup (mntent.mnt_fstype);
+ 

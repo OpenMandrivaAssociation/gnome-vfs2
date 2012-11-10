@@ -1,0 +1,36 @@
+--- gnome-vfs-2.17.91/libgnomevfs/gnome-vfs-mime-info-cache.c.onlyshow	2007-03-01 11:15:45.000000000 +0100
++++ gnome-vfs-2.17.91/libgnomevfs/gnome-vfs-mime-info-cache.c	2007-03-01 13:29:22.000000000 +0100
+@@ -487,6 +487,13 @@
+ 			if (strcmp (only_show_in_list[i], "GNOME") == 0) {
+ 				can_show_in = TRUE;
+ 				break;
++			} else {
++				if (g_getenv("KDE_FULL_SESSION") &&
++				    (strcmp (only_show_in_list[i], "KDE") == 0)) {
++					can_show_in = TRUE;
++					break;
++			
++				}
+ 			}
+ 		}
+ 
+@@ -511,10 +518,18 @@
+ 		}
+ 
+ 		for (i = 0; not_show_in_list[i] != NULL; i++) {
+-			if (strcmp (not_show_in_list[i], "GNOME") == 0) {
++			if (g_getenv("GNOME_DESKTOP_SESSION_ID") && strcmp (not_show_in_list[i], "GNOME") == 0) {
+ 				can_show_in = FALSE;
+ 				break;
++			} else {
++				if (g_getenv("KDE_FULL_SESSION") &&
++					(strcmp (not_show_in_list[i], "KDE") == 0)) {
++					can_show_in = FALSE;
++					break;
++			
++				}
+ 			}
++
+ 		}
+ 
+ 		g_strfreev (not_show_in_list);

@@ -1,0 +1,22 @@
+Index: schemas/desktop_gnome_url_handlers.schemas.in
+===================================================================
+--- gnome-vfs/schemas/desktop_gnome_url_handlers.schemas.in	(révision 5284)
++++ gnome-vfs/schemas/desktop_gnome_url_handlers.schemas.in	(copie de travail)
+@@ -289,7 +289,7 @@
+       <applyto>/desktop/gnome/url-handlers/callto/command</applyto>
+       <owner>gnome</owner>
+       <type>string</type>
+-      <default>gnomemeeting -c %s</default>
++      <default>ekiga -c "%s"</default>
+       <locale name="C">
+         <short>The handler for "callto" URLs</short>
+         <long>The command used to handle "callto" URLs, if enabled.</long>
+@@ -323,7 +323,7 @@
+       <applyto>/desktop/gnome/url-handlers/h323/command</applyto>
+       <owner>gnome</owner>
+       <type>string</type>
+-      <default>gnomemeeting -c %s</default>
++      <default>ekiga -c "%s"</default>
+       <locale name="C">
+         <short>The handler for "h323" URLs</short>
+         <long>The command used to handle "h323" URLs, if enabled.</long>

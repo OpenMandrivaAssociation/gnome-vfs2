@@ -1,0 +1,19 @@
+diff -p -up gnome-vfs-2.24.1/libgnomevfs/gnome-vfs-unix-mounts.c.pamconsole gnome-vfs-2.24.1/libgnomevfs/gnome-vfs-unix-mounts.c
+--- gnome-vfs-2.24.1/libgnomevfs/gnome-vfs-unix-mounts.c.pamconsole	2009-03-17 14:48:21.000000000 +0100
++++ gnome-vfs-2.24.1/libgnomevfs/gnome-vfs-unix-mounts.c	2009-03-17 15:41:26.000000000 +0100
+@@ -601,6 +601,7 @@ _gnome_vfs_get_unix_mount_table (GList *
+ 		    || hasmntopt (mntent, "pamconsole") != NULL
+ 		    || hasmntopt (mntent, "users") != NULL
+ 		    || hasmntopt (mntent, "owner") != NULL
++		    || hasmntopt (mntent, "pamconsole") != NULL
+ #endif
+ 		    ) {
+ 			mount_entry->is_user_mountable = TRUE;
+@@ -682,6 +683,7 @@ _gnome_vfs_get_unix_mount_table (GList *
+ 		    || hasmntopt (&mntent, "pamconsole") != NULL
+ 		    || hasmntopt (&mntent, "users") != NULL
+ 		    || hasmntopt (&mntent, "owner") != NULL
++		    || hasmntopt (mntent, "pamconsole") != NULL
+ #endif
+ 		    ) {
+ 			mount_entry->is_user_mountable = TRUE;
