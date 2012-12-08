@@ -7,7 +7,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version:	2.24.4
-Release:	5
+Release:	6
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
@@ -53,7 +53,7 @@ BuildRequires:	pkgconfig(libssl)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	perl-XML-Parser
-BuildRequires:	libacl-devel
+BuildRequires:	acl-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	fam-devel
 Requires:	%{libname} = %{version}-%{release}
