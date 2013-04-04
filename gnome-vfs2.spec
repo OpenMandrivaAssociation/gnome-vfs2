@@ -1,3 +1,4 @@
+%define _disable_ld_no_undefined 1
 %define	pkgname gnome-vfs
 %define	api_version	2
 %define	lib_major	0
@@ -7,7 +8,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api_version}
 Version:	2.24.4
-Release:	6
+Release:	7
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		http://www.gnome.org/
