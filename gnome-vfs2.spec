@@ -1,18 +1,20 @@
 %define _disable_ld_no_undefined 1
+%define url_ver %(echo %{version}|cut -d. -f1,2)
+
 %define	pkgname gnome-vfs
-%define	api_version	2
-%define	lib_major	0
-%define	libname	%mklibname %{name}_ %{lib_major}
-%define	develname %mklibname -d %{name}
+%define	api	2
+%define	major	0
+%define	libname	%mklibname %{name}_ %{major}
+%define	devname %mklibname -d %{name}
 
 Summary:	GNOME virtual file-system libraries
-Name:		%{pkgname}%{api_version}
+Name:		%{pkgname}%{api}
 Version:	2.24.4
 Release:	7
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
-URL:		http://www.gnome.org/
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{pkgname}/%{pkgname}-%{version}.tar.bz2
+Url:		http://www.gnome.org/
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gnome-vfs/%{url_ver}/%{pkgname}-%{version}.tar.bz2
 # (gw) 2.6.0-1mdk set default web browser
 Patch5:		gnome-vfs-2.8.2-webclient.patch
 # (fc) 2.8.2-1mdk handle about: url (Fedora)
@@ -44,6 +46,10 @@ BuildRequires:	GConf2
 BuildRequires:	gnome-mime-data
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
+BuildRequires:	perl-XML-Parser
+BuildRequires:	acl-devel
+BuildRequires:	bzip2-devel
+BuildRequires:	fam-devel
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(avahi-glib)
 BuildRequires:	pkgconfig(dbus-1)
@@ -53,17 +59,12 @@ BuildRequires:	pkgconfig(glib-2.0) >= 2.9.3
 BuildRequires:	pkgconfig(libssl)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(smbclient)
-BuildRequires:	perl-XML-Parser
-BuildRequires:	acl-devel
-BuildRequires:	bzip2-devel
-BuildRequires:	fam-devel
-Requires:	%{libname} = %{version}-%{release}
 Requires(post,preun):	GConf2 >= 1.1.1
 Requires:	dbus-x11
-Requires:	shared-mime-info
 # needed for www-browser
 Requires:	desktop-common-data
 Requires:	gnome-mime-data >= 2.0.0
+Requires:	shared-mime-info
 Conflicts:	%{_lib}gnome-vfs2_0 < 2.24.4-5
 
 %description
@@ -79,24 +80,16 @@ Summary:	%{summary}
 Group:		System/Libraries
 
 %description -n %{libname}
-The GNOME Virtual File System provides an abstraction to common file
-system operations like reading, writing and copying files, listing
-directories and so on.
-
 This package contains the main GNOME VFS libraries, which is required
 by the basic GNOME 2 system.
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	Libraries and include files for gnome-vfs
 Group:		Development/GNOME and GTK+
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 
-%description -n %{develname}
-The GNOME Virtual File System provides an abstraction to common file
-system operations like reading, writing and copying files, listing
-directories and so on.
-
+%description -n %{devname}
 This package includes libraries and header files for developing
 GNOME VFS applications.
 
@@ -119,7 +112,6 @@ sed -i -e 's/-DG_DISABLE_DEPRECATED//g' \
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
 # multiarch policy
@@ -128,11 +120,7 @@ rm -rf %{buildroot}
 # we ship our own files in drakconf and drakwizard
 rm -f %{buildroot}%{_sysconfdir}/gnome-vfs-2.0/vfolders/{system,server}-settings.vfolder-info
 
-# don't package these
-rm -f %{buildroot}%{_libdir}/%{pkgname}-*/modules/*a
-find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
-
-%{find_lang} %{pkgname}-2.0
+%find_lang %{pkgname}-2.0
 
 %define	schemas desktop_default_applications desktop_gnome_url_handlers system_dns_sd system_http_proxy system_smb 
 
@@ -151,9 +139,9 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %{_libexecdir}/gnome-vfs-daemon
 
 %files -n %{libname}
-%{_libdir}/libgnomevfs-2.so.%{lib_major}*
+%{_libdir}/libgnomevfs-%{api}.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %doc ChangeLog
 %doc %{_datadir}/gtk-doc/html/*
 %{_includedir}/gnome-vfs*2.0/*
@@ -163,3 +151,4 @@ find %{buildroot}%{_libdir} -name '*.la' -type f -delete -print
 %{_libdir}/*.so
 %{_libdir}/%{pkgname}-*/include
 %{_libdir}/pkgconfig/*.pc
+
