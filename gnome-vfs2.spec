@@ -10,7 +10,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api}
 Version:	2.24.4
-Release:	7
+Release:	8
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://www.gnome.org/
