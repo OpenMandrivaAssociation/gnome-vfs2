@@ -41,7 +41,7 @@ Patch19:	gnome-vfs-2.24.3-CVE-2009-2473.patch
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gawk
 BuildRequires:	GConf2
-BuildRequires:	gnome-mime-data
+BuildRequires:	gnome-mime-data-devel
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(avahi-client)
