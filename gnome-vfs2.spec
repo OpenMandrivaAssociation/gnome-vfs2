@@ -104,7 +104,7 @@ sed -i -e 's/-DG_DISABLE_DEPRECATED//g' \
 
 %build
 %configure2_5x \
-	--enable-gtk-doc=yes \
+	--disable-gtk-doc \
 	--disable-selinux \
 	--disable-hal \
 	--disable-static
