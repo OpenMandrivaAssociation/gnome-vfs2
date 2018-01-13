@@ -1,0 +1,22 @@
+--- gnome-vfs-2.24.4/libgnomevfs/gnome-vfs-ssl.c.openssl11	2010-02-09 13:16:14.000000000 +0100
++++ gnome-vfs-2.24.4/libgnomevfs/gnome-vfs-ssl.c	2017-09-23 18:30:29.691833045 +0200
+@@ -400,8 +400,8 @@
+ 			}
+ 		}
+ 
+-                if (ssl->private->ssl->ctx)
+-                        SSL_CTX_free (ssl->private->ssl->ctx);
++                if (SSL_get_SSL_CTX(ssl->private->ssl))
++                        SSL_CTX_free (SSL_get_SSL_CTX(ssl->private->ssl));
+ 
+                 SSL_free (ssl->private->ssl);
+ 		g_free (ssl->private);
+@@ -705,7 +705,7 @@
+ 		}
+ 	}
+ 	
+-	SSL_CTX_free (ssl->private->ssl->ctx);
++	SSL_CTX_free (SSL_get_SSL_CTX(ssl->private->ssl));
+ 	SSL_free (ssl->private->ssl);
+ 	close (ssl->private->sockfd);
+ 	if (ssl->private->timeout)

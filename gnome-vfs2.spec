@@ -12,11 +12,11 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api}
 Version:	2.24.4
-Release:	18
+Release:	19
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://www.gnome.org/
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gnome-vfs/%{url_ver}/%{pkgname}-%{version}.tar.bz2
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-vfs/%{url_ver}/%{pkgname}-%{version}.tar.bz2
 # (gw) 2.6.0-1mdk set default web browser
 Patch5:		gnome-vfs-2.8.2-webclient.patch
 # (fc) 2.8.2-1mdk handle about: url (Fedora)
@@ -41,6 +41,8 @@ Patch17:	gnome-vfs-2.15.91-mailto-command.patch
 Patch18:	gnome-vfs-2.24.xx-utf8-mounts.patch
 # (fc) CVE-2009-2473 gnome-vfs2 embedded neon: billion laughs DoS attacck (Fedora)
 Patch19:	gnome-vfs-2.24.3-CVE-2009-2473.patch
+# Fix build with OpenSSL 1.1, stolen from Mageia
+Patch20:	gnome-vfs-2.24.4-openssl11.patch
 
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gawk
@@ -105,7 +107,7 @@ sed -i -e 's/-DG_DISABLE_DEPRECATED//g' \
 	./libgnomevfs/Makefile.*
 
 %build
-%configure2_5x \
+%configure \
 	--disable-gtk-doc \
 	--disable-selinux \
 	--disable-hal \
@@ -115,9 +117,6 @@ sed -i -e 's/-DG_DISABLE_DEPRECATED//g' \
 
 %install
 %makeinstall_std
-
-# multiarch policy
-%multiarch_includes %{buildroot}%{_includedir}/gnome-vfs-2.0/libgnomevfs/gnome-vfs-file-size.h
 
 # we ship our own files in drakconf and drakwizard
 rm -f %{buildroot}%{_sysconfdir}/gnome-vfs-2.0/vfolders/{system,server}-settings.vfolder-info
@@ -146,11 +145,7 @@ rm -f %{buildroot}%{_sysconfdir}/gnome-vfs-2.0/vfolders/{system,server}-settings
 %files -n %{devname}
 %doc ChangeLog
 %doc %{_datadir}/gtk-doc/html/*
-%{_includedir}/gnome-vfs*2.0/*
-%dir %{multiarch_includedir}/gnome-vfs-2.0
-%dir %{multiarch_includedir}/gnome-vfs-2.0/libgnomevfs
-%{multiarch_includedir}/gnome-vfs-2.0/libgnomevfs/gnome-vfs-file-size.h
+%{_includedir}/gnome-vfs*2.0
 %{_libdir}/*.so
 %{_libdir}/%{pkgname}-*/include
 %{_libdir}/pkgconfig/*.pc
-
