@@ -12,7 +12,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api}
 Version:	2.24.4
-Release:	20
+Release:	21
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://www.gnome.org/
@@ -113,10 +113,10 @@ sed -i -e 's/-DG_DISABLE_DEPRECATED//g' \
 	--disable-hal \
 	--disable-static
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 # we ship our own files in drakconf and drakwizard
 rm -f %{buildroot}%{_sysconfdir}/gnome-vfs-2.0/vfolders/{system,server}-settings.vfolder-info
