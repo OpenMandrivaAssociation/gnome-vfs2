@@ -15,7 +15,7 @@ Version:	2.24.4
 Release:	22
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
-Url:		http://www.gnome.org/
+Url:		https://www.gnome.org/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gnome-vfs/%{url_ver}/%{pkgname}-%{version}.tar.bz2
 # (gw) 2.6.0-1mdk set default web browser
 Patch5:		gnome-vfs-2.8.2-webclient.patch
