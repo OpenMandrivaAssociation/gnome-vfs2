@@ -44,6 +44,11 @@ Patch19:	gnome-vfs-2.24.3-CVE-2009-2473.patch
 # Fix build with OpenSSL 1.1, stolen from Mageia
 Patch20:	gnome-vfs-2.24.4-openssl11.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gawk
 BuildRequires:	GConf2
