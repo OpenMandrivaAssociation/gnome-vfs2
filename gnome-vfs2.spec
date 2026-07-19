@@ -2,6 +2,7 @@
 %define url_ver %(echo %{version}|cut -d. -f1,2)
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
+%global optflags %{optflags} -Wno-error -Wno-implicit-function-declaration
 
 %define	pkgname gnome-vfs
 %define	api	2
@@ -12,7 +13,7 @@
 Summary:	GNOME virtual file-system libraries
 Name:		%{pkgname}%{api}
 Version:	2.24.4
-Release:	26
+Release:	27
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 Url:		https://www.gnome.org/
